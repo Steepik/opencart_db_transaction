@@ -1,4 +1,4 @@
-## Opencart database transaction
+## Opencart v4 database transaction
 
 ### Installation
 Upload the contents to the root directory of your OpenCart installation.
