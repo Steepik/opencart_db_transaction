@@ -20,6 +20,11 @@ $db = \DbTransaction\Factory::create($config, 'pdo');
 Should look like this
 ![alt text](https://i.ibb.co/qx6xfDC/Screenshot-3.jpg)
 
+***Also in config.php should be set pdo driver***
+```
+define('DB_DRIVER', 'pdo');
+```
+
 ### How to use
 
 ```
