@@ -15,7 +15,7 @@ $db = new DB($config->get('db_engine'), $config->get('db_hostname'), $config->ge
 ```
 And replace to:
 ```
-$db = \DbTransaction\Factory::create($config, 'pdo');
+$db = \DbTransaction\Factory::create($config, DB_DRIVER);
 ```
 Should look like this
 ![alt text](https://i.ibb.co/qNpjq5j/Screenshot-2.jpg)
