@@ -1,5 +1,7 @@
 ## Opencart v4 database transaction
 
+***Make sure your database storage engine (InnoDB for example) supports transactions***
+
 ### Installation
 Upload the contents to the root directory of your OpenCart installation.
 
