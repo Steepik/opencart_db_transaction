@@ -1,5 +1,7 @@
 ## Opencart v3 database transaction
 
+* PHP 7.4+
+
 ***Make sure your database storage engine (InnoDB for example) supports transactions***
 
 ### Installation
