@@ -23,7 +23,12 @@ $config->set('db_port', '3306');
 $db = \DbTransaction\Factory::create($config, 'pdo');
 ```
 Should look like this
-![alt text](https://i.ibb.co/zxjmjdL/Screenshot-1.jpg)
+![alt text](https://i.ibb.co/nwgHCw9/Screenshot-1.jpg)
+
+***Also in config.php should be set pdo driver***
+```
+define('DB_DRIVER', 'pdo');
+```
 
 ### How to use
 
