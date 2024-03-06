@@ -1,18 +1,52 @@
 <?php
 
-declare(strict_types=1);
-
 namespace DbTransaction;
 
 interface Connection
 {
-    public function query(string $sql);
-    public function escape(string $value): string;
-    public function countAffected(): int;
-    public function getLastId(): ?int;
-    public function isConnected(): bool;
+    /**
+     * @param string $sql
+     */
+    public function query($sql);
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    public function escape($value);
+
+    /**
+     * @return int
+     */
+    public function countAffected();
+
+    /**
+     * @return int|null
+     */
+    public function getLastId();
+
+    /**
+     * @return bool
+     */
+    public function isConnected();
+
+    /**
+     * @return mixed
+     */
     public function transaction(\Closure $callback);
-    public function commit(): void;
-    public function rollBack(): void;
-    public function transactionLevel(): int;
+
+    /**
+     * @return void
+     */
+    public function commit();
+
+    /**
+     * @return void
+     */
+    public function rollBack();
+
+    /**
+     * @return int
+     */
+    public function transactionLevel();
 }

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace DbTransaction;
 
 use Config;
@@ -9,9 +7,14 @@ use Config;
 final class Factory
 {
     /**
+     * @param Config $config
+     * @param string $driver
+     *
+     * @return PDOConnection
+     *
      * @throws \Exception
      */
-    public static function create(Config $config, string $driver): Connection
+    public static function create($config, $driver)
     {
         $hostname = $config->get('db_hostname');
         $username = $config->get('db_username');

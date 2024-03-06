@@ -1,22 +1,41 @@
 <?php
 
-declare(strict_types=1);
-
 namespace DbTransaction;
 
 use PDO;
 
 final class PDOConnection implements Connection
 {
-    private ?\PDO $pdo;
+    /**
+     * @var PDO|null
+     */
+    private $pdo;
 
-    private array $data = [];
+    /**
+     * @var array
+     */
+    private $data = [];
 
-    private int $affected;
+    /**
+     * @var int
+     */
+    private $affected;
 
-    private int $transactions = 0;
+    /**
+     * @var int
+     */
+    private $transactions = 0;
 
-    public function __construct(string $hostname, string $username, string $password, string $database, string $port = '3306')
+    /**
+     * @param string $hostname
+     * @param string $username
+     * @param string $password
+     * @param string $database
+     * @param string $port
+     *
+     * @throws \Exception
+     */
+    public function __construct($hostname, $username, $password, $database, $port = '3306')
     {
         try {
             $this->pdo = new PDO('mysql:host=' . $hostname . ';port=' . $port . ';dbname=' . $database . ';charset=utf8mb4', $username, $password, [PDO::ATTR_PERSISTENT => false, PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_general_ci']);
@@ -30,7 +49,13 @@ final class PDOConnection implements Connection
         $this->query("SET time_zone = '" . $this->escape(date('P')) . "'");
     }
 
-    public function query(string $sql)
+    /**
+     * @param string $sql
+     * @return bool|\stdClass
+     *
+     * @throws \Exception
+     */
+    public function query($sql)
     {
         try {
             $sql = preg_replace('/(?:\'\:)([a-z0-9]*.)(?:\')/', ':$1', $sql);
@@ -65,7 +90,12 @@ final class PDOConnection implements Connection
         }
     }
 
-    public function escape(?string $value): string
+    /**
+     * @param string|null $value
+     *
+     * @return string
+     */
+    public function escape($value)
     {
         if ($value === '+00:00') {
             return '+00:00';
@@ -78,23 +108,37 @@ final class PDOConnection implements Connection
         return $key;
     }
 
-    public function countAffected(): int
+    /**
+     * @return int
+     */
+    public function countAffected()
     {
         return $this->affected;
     }
 
-    public function getLastId(): ?int
+    /**
+     * @return int|null
+     */
+    public function getLastId()
     {
         $id = $this->pdo->lastInsertId();
 
         return $id ? (int)$id : null;
     }
 
-    public function isConnected(): bool
+    /**
+     * @return bool
+     */
+    public function isConnected()
     {
         return $this->pdo !== null;
     }
 
+    /**
+     * @return mixed
+     *
+     * @throws \Exception
+     */
     public function transaction(\Closure $callback)
     {
         $this->beginTransaction();
@@ -104,14 +148,17 @@ final class PDOConnection implements Connection
             $this->commit();
 
             return $result;
-        } catch (\Throwable $exception) {
+        } catch (\Exception $exception) {
             $this->rollBack();
 
             throw $exception;
         }
     }
 
-    public function beginTransaction(): void
+    /**
+     * @return void
+     */
+    public function beginTransaction()
     {
         ++$this->transactions;
 
@@ -120,7 +167,10 @@ final class PDOConnection implements Connection
         }
     }
 
-    public function commit(): void
+    /**
+     * @return void
+     */
+    public function commit()
     {
         if ($this->transactions == 1) {
             $this->pdo->commit();
@@ -129,7 +179,10 @@ final class PDOConnection implements Connection
         --$this->transactions;
     }
 
-    public function rollBack(): void
+    /**
+     * @return void
+     */
+    public function rollBack()
     {
         if ($this->transactions == 1) {
             $this->transactions = 0;
@@ -139,7 +192,10 @@ final class PDOConnection implements Connection
         }
     }
 
-    public function transactionLevel(): int
+    /**
+     * @return int
+     */
+    public function transactionLevel()
     {
         return $this->transactions;
     }
