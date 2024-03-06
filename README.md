@@ -15,10 +15,15 @@ $db = new \Opencart\System\Library\DB($config->get('db_engine'), $config->get('d
 ```
 And replace to:
 ```
-$db = Opencart\System\Library\DbTransaction\Factory::create($config, 'pdo');
+$db = Opencart\System\Library\DbTransaction\Factory::create($config, DB_DRIVER);
 ```
 Should look like this
-![alt text](https://i.ibb.co/tM2wFVy/Screenshot-1.jpg)
+![alt text](https://i.ibb.co/X2yBqty/Screenshot-3.jpg)
+
+***Also in config.php should be set pdo driver***
+```
+define('DB_DRIVER', 'pdo');
+```
 
 ### How to use
 
