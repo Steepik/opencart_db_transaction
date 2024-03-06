@@ -20,7 +20,7 @@ $config->set('db_username', DB_USERNAME);
 $config->set('db_password', DB_PASSWORD);
 $config->set('db_database', DB_DATABASE);
 $config->set('db_port', '3306');
-$db = \DbTransaction\Factory::create($config, 'pdo');
+$db = \DbTransaction\Factory::create($config, DB_DRIVER);
 ```
 Should look like this
 ![alt text](https://i.ibb.co/nwgHCw9/Screenshot-1.jpg)
