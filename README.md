@@ -18,7 +18,7 @@ And replace to:
 $db = \DbTransaction\Factory::create($config, 'pdo');
 ```
 Should look like this
-![alt text](https://i.ibb.co/qx6xfDC/Screenshot-3.jpg)
+![alt text](https://i.ibb.co/qNpjq5j/Screenshot-2.jpg)
 
 ***Also in config.php should be set pdo driver***
 ```
